@@ -1,0 +1,261 @@
+Program 7: Animal shelter problem.
+
+
+solution:
+
+
+    in this problem there are two types of animals:Dog and Cat
+    which are keep in shelter home based on there  entering time.
+        which come first ,is older than which come after that.
+    people can adopt only on basis of two:
+        either take oldest animal 
+        or have choice of either Dog and Cat.but have older animal which they have select.
+
+Source code:
+
+
+
+import java.util.LinkedList;
+
+
+abstract class Animal
+
+{
+
+ int order;
+
+ String name;
+
+ 
+
+ public Animal(String Name)
+
+ {
+
+  name=Name;
+
+  order = (int) System.nanoTime();
+
+ }
+
+ public void setOrder(int ord)
+
+ {
+
+  order=ord;
+
+ }
+
+ public int getOrder()
+
+ {
+
+  return order;
+
+ }
+
+ public boolean isOlderThan(Animal a)
+
+ {
+
+  return this.order<a.getOrder();
+
+ }
+
+}
+
+ 
+
+class Dog extends Animal
+
+ {
+
+  public Dog(String Name)
+
+  {
+
+   super(Name);
+
+  }
+
+  public String toString() {
+
+   return "Dog:" + name + ":" + order;
+
+  }
+
+ }
+
+class Cat extends Animal
+
+ {
+
+  public Cat(String Name)
+
+  {
+
+   super(Name);
+
+  }
+
+  public String toString() {
+
+            return "Cat:" + name + ":" + order;
+
+  }
+
+ }
+
+ 
+
+class AnimalQueue
+
+{
+
+ LinkedList <Dog> dogs=new LinkedList<Dog>();
+
+ LinkedList <Cat> cats=new LinkedList<Cat>();
+
+ 
+
+ private int order=0;
+
+ 
+
+ public void enqueue(Animal a)
+
+ {
+
+  a.setOrder(order);
+
+  order++;
+
+  
+
+  if(a instanceof Dog)
+
+   dogs.addLast((Dog)a);
+
+  else 
+
+   if(a instanceof Cat)
+
+   cats.addLast((Cat)a);   
+
+ }
+
+ public Animal dequeueAny()
+
+ {
+
+  if(dogs.size()==0)
+
+  return dequeueCats();
+
+  else 
+
+  if(cats.size()==0)
+
+   return dequeueDogs();
+
+  
+
+ Dog dog=dogs.peek();
+
+ Cat cat=cats.peek();
+
+ 
+
+ if(dog.isOlderThan(cat))
+
+ {
+
+  return dequeueDogs();
+
+ }
+
+ else
+
+ {
+
+  return dequeueCats();
+
+ }
+
+ }
+
+ 
+
+ public Dog dequeueDogs()
+
+ {
+
+  return dogs.poll();
+
+ }
+
+ public Cat dequeueCats()
+
+ {
+
+  return cats.poll();
+
+ } 
+
+}
+
+ 
+
+public class Program7 {
+
+ public static void main(String[] args) {
+
+  
+
+  AnimalQueue input=new AnimalQueue();
+
+  
+
+  input.enqueue(new Cat("anne"));
+
+  input.enqueue(new Dog("max"));
+
+  input.enqueue(new Cat("rony"));
+
+  input.enqueue(new Dog("charli"));
+
+  input.enqueue(new Dog("Peter"));
+
+  input.enqueue(new Cat("lilly"));
+
+  
+
+  System.out.println(input.dequeueAny());
+
+  System.out.println(input.dequeueCats());
+
+  System.out.println(input.dequeueAny());
+
+  
+
+        input.enqueue(new Dog("herry"));
+
+        System.out.println(input.dequeueDogs());
+
+        System.out.println(input.dequeueAny());
+
+        System.out.println(input.dequeueAny());
+
+        System.out.println(input.dequeueAny());
+
+        
+
+  
+
+
+ }
+
+
+}
+
+
