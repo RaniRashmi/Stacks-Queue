@@ -1,0 +1,227 @@
+Program 4:Implement tower of Hanoi.
+
+
+Rules-
+
+
+    only one disk can move at a time
+    a small disk always onto the large disk
+    a disk is slid off the top of one tower onto the next rod.
+
+for theory of tower of can see Tower of Hanoi on Wikipedia.
+
+
+
+
+Source code-
+
+
+import java.util.Scanner;
+
+class Node
+
+{
+
+ int data;
+
+ Node next;
+
+ public Node(int value)
+
+ {
+
+   data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+"");
+
+ }
+
+}
+
+class stack
+
+{
+
+ private Node top;
+
+ private String name;
+
+ public stack()
+
+ {
+
+  top=null;
+
+  name=null;
+
+ }
+
+ public boolean isEmpty()
+
+ {
+
+  return(top==null);
+
+ }
+
+ public void push(int value)
+
+ {
+
+  Node newNode=new Node(value);
+
+  newNode.next=top;
+
+  top=newNode;
+
+ }
+
+ public int pop()
+
+ {
+
+  Node temp=top;
+
+  top=top.next;
+
+  return temp.data;
+
+ }
+
+ public void Display()
+
+ {
+
+  Node temp=top;
+
+  while(temp!=null)
+
+  {
+
+   temp.Display();
+
+   temp=temp.next;
+
+  }
+
+  
+
+ }
+
+ public void SetName(String Name)
+
+ {
+
+  name=Name;
+
+ }
+
+ public String GetName()
+
+ {
+
+  return name;
+
+ }
+
+}
+
+public class TowerOfHanoi1 {
+
+ public static void main(String[] args) {
+
+  Scanner in=new Scanner(System.in);
+
+  int n,i;
+
+  n=in.nextInt();
+
+  
+
+  stack source=new stack();
+
+  source.SetName("Source");
+
+  for(i=n;i>0;i--)
+
+  {
+
+   source.push(i);
+
+  }
+
+  System.out.println("The disk is source stack is shown below:");
+
+  source.Display();
+
+  
+
+  stack dest=new stack();
+
+  dest.SetName("Destination");
+
+  
+
+  stack temp=new stack();
+
+  temp.SetName("Temp");
+
+  
+
+  TOH1(n,source,temp,dest);
+
+  System.out.println("final content of stack destination is:");
+
+  dest.Display();
+
+  
+
+ }
+
+
+ private static void TOH1(int n, stack source, stack temp, stack dest) {
+
+  int i;
+
+  if(n==1)
+
+  {
+
+   i=source.pop();
+
+   dest.push(i);
+
+  System.out.println("Move disk "+i+ " from "+source.GetName()+ " to " +dest.GetName()); 
+
+  }
+
+  else
+
+  {
+
+  TOH1(n-1,source,dest,temp);
+
+  i=source.pop();
+
+  dest.push(i);
+
+  
+
+  System.out.println("Move disk "+i+ " from "+source.GetName()+ " to " +dest.GetName());
+
+    TOH1(n-1,temp,source,dest);
+
+  }
+
+ }
+
+
+}
+
+
