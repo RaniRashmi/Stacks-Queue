@@ -1,0 +1,319 @@
+Program 3:Imagine a stack of plates.if the stack get too high.it might topple.therefore in real life we would to start a new stack in real life when previous stack exceed.implement a SetOfStack data structure.
+
+
+Solution-
+
+
+    we will take array list .In this each index is for individual stack.
+    take an stack of fixed size.
+    put the element in one stack.If it is already filled then put the element into the next stack.
+
+
+import java.util.ArrayList;
+
+class Node
+
+{
+
+ int data;
+
+ Node next;
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.print(data+" ");
+
+ }
+
+}
+
+class stack
+
+{
+
+ private Node top;
+
+ private int capacity;
+
+ public stack(int cap)
+
+ {
+
+  top=null;
+
+  capacity=cap;
+
+ }
+
+ public boolean isEmpty()
+
+ {
+
+  return(top==null);
+
+ }
+
+ public boolean IsFull()
+
+ {
+
+  Node temp=top;
+
+  int count=0;
+
+  while(temp!=null)
+
+  {
+
+   count++;
+
+   temp=temp.next;
+
+  }
+
+  if(count>=capacity)
+
+  return true;
+
+  return false;
+
+ }
+
+ public void push(int value)
+
+ {
+
+  Node newNode=new Node(value);
+
+  newNode.next=top;
+
+  top=newNode;
+
+ 
+
+ }
+
+ public int pop()
+
+ {
+
+  Node temp=top;
+
+  top=top.next;
+
+  return temp.data;
+
+ }
+
+ public void Display()
+
+ {
+
+  Node temp=top;
+
+  while(temp!=null)
+
+  {
+
+   temp.Display();
+
+   temp=temp.next;
+
+  }
+
+ }
+
+} 
+
+class SetOfStack
+
+ {
+
+ ArrayList<stack> stacks=new ArrayList<stack>();
+
+ private int index; 
+
+ public SetOfStack()
+
+ {
+
+  index=-1;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return stacks.isEmpty();
+
+ }
+
+ public stack returnLastStack()
+
+ {
+
+  if(index>-1)
+
+  return stacks.get(index);
+
+  return null;//if there is no stack yet created
+
+ }
+
+ public void push(int value)
+
+ {
+
+  stack last=returnLastStack();
+
+  if((last==null)||last.IsFull())
+
+  {
+
+   stack newstack= new stack(5);//we have taken stack with capacity 5
+
+   newstack.push(value);
+
+   stacks.add(newstack); //add is arraylist function
+
+   index++;
+
+  }
+
+  else
+
+   last.push(value);
+
+ }
+
+ public int pop()
+
+ {
+
+  stack last=returnLastStack();
+
+  if(last==null||(last.isEmpty()))
+
+  {
+
+   stacks.remove(index);
+
+   index--;
+
+   last=returnLastStack(); 
+
+    
+
+  }
+
+  if(index<=-1)
+
+  {
+
+   System.out.println("we are nothing to pop!");
+
+   return 0;
+
+  }
+
+  return last.pop();
+
+ }
+
+ public void PrintLastStack()
+
+ {
+
+  stack last=returnLastStack();
+
+  last.Display();
+
+  System.out.println();
+
+ }
+
+ public void PrintAllStack()
+
+ {
+
+  int i=index;
+
+  stack temp;
+
+  while(i>=0)
+
+  {
+
+   temp=stacks.get(i);
+
+   temp.Display();
+
+   System.out.println();
+
+   i--;  
+
+  }
+
+  
+
+ }
+
+}
+
+ 
+
+public class Program3 {
+
+ public static void main(String[] args) {
+
+  
+
+  SetOfStack object=new SetOfStack();
+
+  object.push(10);
+
+  object.push(20);
+
+  object.push(30);
+
+  object.push(40);
+
+  object.push(50);
+
+  object.push(60);
+
+  object.push(70);
+
+  object.PrintLastStack();
+
+  object.PrintAllStack();
+
+  
+
+  
+
+  int value=object.pop();
+
+  object.PrintLastStack();
+
+  object.PrintAllStack();
+
+  
+
+ }
+
+
+}
+
+
