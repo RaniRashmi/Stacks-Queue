@@ -1,0 +1,373 @@
+Program 2:how would you design a stack which ,in addition to push and pop, also has a function
+
+min which return the minimum element?Push ,pop and min should all operate in O(1) time.
+
+
+Solution:The given problem is saying that every time when we are putting an element into stack.we also see the min of pushed elements.we can implement it by two methods.
+
+
+
+    Method 1: we will take a stack of double size.In which we also save min of pushed and previous element.
+
+
+
+Source Code:
+
+
+class Node
+
+{
+
+ int data;
+
+ int min;
+
+ Node next;
+
+ 
+
+ public Node(int value , int minimum)
+
+ {
+
+  data=value;
+
+  min=minimum;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.print("["+data+""+min+ "]");
+
+ }
+
+}
+
+class Stack
+
+{
+
+ private Node top;
+
+ public Stack()
+
+ {
+
+  top=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return(top==null);
+
+ }
+
+ public void push(int value)
+
+ {
+
+  int minimum;
+
+  if(top==null)
+
+  {
+
+   minimum=value;
+
+  }
+
+  else
+
+  {
+
+   minimum=top.min<value?top.min:value;
+
+  }
+
+  Node newNode=new Node(value,minimum);
+
+  newNode.next=top;
+
+  top=newNode;
+
+ }
+
+ public int pop()
+
+ {
+
+  Node temp=top;
+
+  top=top.next;
+
+  return temp.data;
+
+ }
+
+ public int min()
+
+ {
+
+  return top.min;
+
+ }
+
+ public void Display()
+
+ {
+
+ Node temp=top;
+
+ while(temp!=null)
+
+ {
+
+  temp.Display();
+
+  temp=temp.next;
+
+ }
+
+ 
+
+ }
+
+}
+
+public class Program1 {
+
+ public static void main(String[] args) {
+
+  Stack input= new Stack();
+
+        input.push(9);
+
+        input.push(5);
+
+        input.push(1);
+
+        input.push(4);
+
+        input.push(0);
+
+        input.Display();
+
+        System.out.println();
+
+        
+
+        int value=input.min();
+
+        System.out.println("The min of the stack ="+value);
+
+        value=input.pop();
+
+        System.out.println("we popped a value ="+value);
+
+        input.Display();
+
+        value=input.min();
+
+        System.out.println("The min of the stack now ="+value);
+
+ }
+
+
+}
+
+
+
+    Method 2:
+        In this we take an another stack to keep track of min.
+        In this method, let assume we have taken stack 1 for pushing element and stack 2 for pushing  min.
+        first time we have single element.so it is minimum.because no other element is present.
+        second time we have one elements in stack 1.so push the next element in stack 1.
+        compare this currently pushed element with previously pushed element.if currently pushed element is less than the first one then push it in stack 2 also.
+        second method is more space efficient than first method as less elements will be pushed into stack 2 ,to less space will be used. 
+
+
+Source code:
+
+
+
+
+class Node
+
+{
+
+ int data;
+
+ Node next;
+
+ public Node(int value)
+
+ {
+
+ data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+"");
+
+ }
+
+}
+
+class Stack
+
+{
+
+ private Node top;
+
+ private Node min_top;
+
+ 
+
+ public Stack()
+
+ {
+
+  top=null;
+
+  min_top=null;
+
+ }
+
+ public void push(int value)
+
+ {
+
+  Node newNode=new Node(value);
+
+  newNode.next=top;
+
+  top=newNode;
+
+  
+
+  if((min_top==null)||(min_top.data>value))
+
+  {
+
+   Node newNode1=new Node(value);
+
+   newNode1.next=min_top;
+
+   min_top=newNode1;
+
+  }
+
+ }
+
+ public int pop()
+
+ {
+
+  Node temp=top;
+
+        top=top.next;
+
+        if(temp.data==min_top.data)
+
+        {
+
+            min_top=min_top.next;
+
+        }
+
+        return temp.data;
+
+ }
+
+ public int min()
+
+ {
+
+   return min_top.data;
+
+  }
+
+ public void Display()
+
+ {
+
+  Node temp=top;
+
+  while(temp!=null)
+
+  {
+
+   temp.Display();
+
+   temp=temp.next;
+
+  }
+
+  
+
+ }
+
+}
+
+public class Program1 {
+
+
+ public static void main(String[] args) {
+
+  Stack input= new Stack();
+
+        input.push(9);
+
+        input.push(5);
+
+        input.push(1);
+
+        input.push(4);
+
+        input.push(0);
+
+        input.Display();
+
+        System.out.println();
+
+        
+
+        int value= input.min();
+
+        System.out.println("The minimum in the stack is "+value);
+
+        
+
+        value= input.pop();
+
+        input.Display();
+
+        System.out.println();
+
+        
+
+        value= input.min();
+
+        System.out.println("The minimum in the stack is "+value);
+
+        
+
+        
+
+ }
+
+
+}
+
+
+
