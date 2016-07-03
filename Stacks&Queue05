@@ -1,0 +1,161 @@
+Program 5:Implement MyQueue class which implement a queue using two stack.
+
+
+Solution:
+
+
+    take two stack old stack and new stack
+    new stack keep the element which are add in start.then pop these elements and push them into the second stack.
+    also put the condition on new stack till the old stack will not empty keep the new element into the stack.
+
+
+source code:
+
+
+import java.util.Stack;
+
+class MyQueue
+
+{
+
+ //new stack -in which we are storing data and old stack in which we are storing in reverse order
+
+ Stack newStack,oldStack;
+
+ public MyQueue()
+
+ {
+
+  newStack=new Stack();
+
+  oldStack=new Stack();
+
+ }
+
+ public void add(Object value)
+
+ {
+
+  newStack.push(value);
+
+ }
+
+ public int size()
+
+ {
+
+  return newStack.size()+oldStack.size();
+
+ }
+
+ //we only shift the newStack value into oldStack only if oldStack is completely empty
+
+ public void ShiftStacks()
+
+ {
+
+  if(oldStack.isEmpty())
+
+  {
+
+   while(!newStack.isEmpty())
+
+   {
+
+   Object value=newStack.pop();
+
+   oldStack.push(value);
+
+   }
+
+  }
+
+ }
+
+ public Object remove()
+
+ {
+
+  ShiftStacks();
+
+  return(oldStack.pop());
+
+  
+
+ }
+
+ public Object peek()
+
+ {
+
+   ShiftStacks();
+
+   return(oldStack.peek());
+
+ }
+
+ //This is not working properly.stack is printing in the order inserted
+
+ public void Display()
+
+ {
+
+  int i;
+
+  for(i=0;i<newStack.size();i++)
+
+  System.out.print(newStack.get(i));
+
+  for(i=oldStack.size()-1;i>=0;i--)
+
+  System.out.print(oldStack.get(i));
+
+  System.out.println();
+
+  
+
+ }
+
+}
+
+public class Program5 {
+
+
+ public static void main(String[] args) {
+
+  
+
+  MyQueue queue=new MyQueue();
+
+  queue.add(" A");
+
+  queue.add(" B");
+
+  queue.add(" C");
+
+  queue.add(" D");
+
+  queue.add(" E");
+
+  queue.Display();
+
+  System.out.println();
+
+  
+
+  Object abc=queue.remove();
+
+  System.out.println(abc);
+
+  System.out.println(queue.peek());
+
+  queue.Display();
+
+
+
+ }
+
+
+}
+
+
