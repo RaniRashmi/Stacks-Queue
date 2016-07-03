@@ -1,0 +1,90 @@
+Program 6:write a program to sort element in ascending order(biggest one is on the top).we
+
+may use only one additional stack.
+
+
+Solution:
+
+
+    push the element in stack 1.
+    stack 2 will keep already sorted elements
+    now we will compare the top element of stack 1 to elements of stack 2.
+        if top element of stack 1 is larger than stack 2 all element then shift this element into the stack 2
+        otherwise keep the this top element of stack 1 into  a temporary variable and shift all the element which are larger then this top element into the stack 1.
+        now put the element which is in temporary variable into stack 2 and now shift all elemnets again in stack 2 which we have shifted into the stack 1.
+
+Source code:
+
+
+
+import java.util.Stack;
+
+public class Program6 {
+
+ public static void main(String[] args) {
+
+  
+
+    Stack <Integer>st=new Stack<Integer>();
+
+    st.add(7);
+
+    st.add(17);
+
+    st.add(2);
+
+    st.add(65);
+
+    st.add(3);
+
+    st.add(6);
+
+    
+
+    System.out.println("the original stack:"+st);
+
+    st=sort(st);
+
+    System.out.println("the sorted stack:"+st);
+
+    
+
+    
+
+ }
+
+
+ private static Stack<Integer> sort(Stack<Integer> st) {
+
+  Stack<Integer>r=new Stack<Integer>();
+
+  int temp,var;
+
+  while(!st.isEmpty())
+
+  {
+
+   var=st.pop();
+
+   while(!r.isEmpty()&&r.peek()>var)
+
+   {
+
+    temp=r.pop();
+
+    st.push(temp);
+
+   }
+
+   r.push(var);
+
+  }
+
+  return r;
+
+ }
+
+
+}
+
+
